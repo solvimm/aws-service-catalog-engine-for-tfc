@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MPL-2.0
 
 #Create a random resource`s name 
-resource "random_string" "random_suffix" {
+resource "random_string" "random_suffix_01" {
   length  = 5
   special = false
   upper   = true
@@ -30,12 +30,12 @@ data "aws_iam_policy_document" "provision_handler" {
 }
 
 resource "aws_iam_role" "provisioning_handler_lambda_execution" {
-  name               = "ServiceCatalogTerraformCloudProvisionHandlerRole-${random_string.random_suffix.result}"
+  name               = "ServiceCatalogTerraformCloudProvisionHandlerRole-${random_string.random_suffix_01.result}"
   assume_role_policy = data.aws_iam_policy_document.provision_handler.json
 }
 
 resource "aws_iam_role_policy" "provision_handler_lambda_execution_role_policy" {
-  name   = "ServiceCatalogTerraformCloudProvisionHandler${random_string.random_suffix.result}Policy"
+  name   = "ServiceCatalogTerraformCloudProvisionHandler${random_string.random_suffix_01.result}Policy"
   role   = aws_iam_role.provisioning_handler_lambda_execution.id
   policy = data.aws_iam_policy_document.policy_for_provision_handler.json
 }
@@ -126,12 +126,12 @@ data "aws_iam_policy_document" "terminate_handler" {
 }
 
 resource "aws_iam_role" "terminate_handler_lambda_execution" {
-  name               = "ServiceCatalogTerraformCloudTerminateHandlerRole${random_string.random_suffix.result}"
+  name               = "ServiceCatalogTerraformCloudTerminateHandlerRole${random_string.random_suffix_01.result}"
   assume_role_policy = data.aws_iam_policy_document.terminate_handler.json
 }
 
 resource "aws_iam_role_policy" "terminate_handler_lambda_execution_role_policy" {
-  name   = "ServiceCatalogTerraformCloudTerminateHandler${random_string.random_suffix.result}Policy"
+  name   = "ServiceCatalogTerraformCloudTerminateHandler${random_string.random_suffix_01.result}Policy"
   role   = aws_iam_role.terminate_handler_lambda_execution.id
   policy = data.aws_iam_policy_document.policy_for_terminate_handler.json
 }
@@ -216,12 +216,12 @@ data "aws_iam_policy_document" "update_handler" {
 }
 
 resource "aws_iam_role" "update_handler_lambda_execution" {
-  name               = "ServiceCatalogTerraformCloudUpdateHandlerRole-${random_string.random_suffix.result}"
+  name               = "ServiceCatalogTerraformCloudUpdateHandlerRole-${random_string.random_suffix_01.result}"
   assume_role_policy = data.aws_iam_policy_document.update_handler.json
 }
 
 resource "aws_iam_role_policy" "update_handler_lambda_execution_role_policy" {
-  name   = "ServiceCatalogTerraformCloudUpdateHandler${random_string.random_suffix.result}Policy"
+  name   = "ServiceCatalogTerraformCloudUpdateHandler${random_string.random_suffix_01.result}Policy"
   role   = aws_iam_role.update_handler_lambda_execution.id
   policy = data.aws_iam_policy_document.policy_for_update_handler.json
 }

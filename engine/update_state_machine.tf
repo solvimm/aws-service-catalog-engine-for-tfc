@@ -1,6 +1,6 @@
 # Copyright (c) HashiCorp, Inc.
 # SPDX-License-Identifier: MPL-2.0
-resource "random_string" "random_suffix" {
+resource "random_string" "random_suffix_08" {
   length  = 5
   special = false
   upper   = true
@@ -20,12 +20,12 @@ data "aws_iam_policy_document" "update_product_state_machine_assumed_policy" {
 }
 
 resource "aws_iam_role" "update_state_machine" {
-  name               = "ServiceCatalogTerraformCloudUpdateOperationStateMachineRole${random_string.random_suffix.result}"
+  name               = "ServiceCatalogTerraformCloudUpdateOperationStateMachineRole${random_string.random_suffix_08.result}"
   assume_role_policy = data.aws_iam_policy_document.update_product_state_machine_assumed_policy.json
 }
 
 resource "aws_iam_role_policy" "update_state_machine" {
-  name   = "ServiceCatalogTerraformCloudUpdateOperationStateMachineRolePolicy${random_string.random_suffix.result}"
+  name   = "ServiceCatalogTerraformCloudUpdateOperationStateMachineRolePolicy${random_string.random_suffix_08.result}"
   role   = aws_iam_role.update_state_machine.id
   policy = data.aws_iam_policy_document.update_state_machine.json
 }

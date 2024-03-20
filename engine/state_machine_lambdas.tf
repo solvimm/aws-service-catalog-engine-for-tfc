@@ -1,6 +1,6 @@
 # Copyright (c) HashiCorp, Inc.
 # SPDX-License-Identifier: MPL-2.0
-resource "random_string" "random_suffix" {
+resource "random_string" "random_suffix_04" {
   length  = 5
   special = false
   upper   = true
@@ -140,7 +140,7 @@ data "aws_iam_policy_document" "basic_lambda_assume_role_policy" {
 resource "aws_iam_role" "state_machine_lambda" {
   for_each = local.lambda_functions
 
-  name               = "${each.key}Role${random_string.random_suffix.result}"
+  name               = "${each.key}Role${random_string.random_suffix_04.result}"
   assume_role_policy = data.aws_iam_policy_document.basic_lambda_assume_role_policy.json
 }
 
@@ -161,7 +161,7 @@ resource "aws_iam_role_policy_attachment" "lambda_xray_write_only_access" {
 resource "aws_iam_role_policy" "state_machine_lambda_policy" {
   for_each = local.lambda_functions
 
-  name   = "${each.key}RolePolicy${random_string.random_suffix.result}"
+  name   = "${each.key}RolePolicy${random_string.random_suffix_04.result}"
   role   = aws_iam_role.state_machine_lambda[each.key].name
   policy = each.value.policy_document
 }
