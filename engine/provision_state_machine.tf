@@ -1,5 +1,10 @@
 # Copyright (c) HashiCorp, Inc.
 # SPDX-License-Identifier: MPL-2.0
+resource "random_string" "random_suffix" {
+  length  = 5
+  special = false
+  upper   = true
+}
 
 data "aws_iam_policy_document" "manage_provisioned_product" {
   statement {
@@ -15,12 +20,12 @@ data "aws_iam_policy_document" "manage_provisioned_product" {
 }
 
 resource "aws_iam_role" "provision_state_machine" {
-  name               = "ServiceCatalogTerraformCloudProvisionOperationStateMachineRole"
+  name               = "ServiceCatalogTerraformCloudProvisionOperationStateMachineRole${random_string.random_suffix.result}"
   assume_role_policy = data.aws_iam_policy_document.manage_provisioned_product.json
 }
 
 resource "aws_iam_role_policy" "manage_provisioned_product_role_policy" {
-  name   = "ServiceCatalogTerraformCloudProvisionOperationStateMachineRolePolicy"
+  name   = "ServiceCatalogTerraformCloudProvisionOperationStateMachineRolePolicy${random_string.random_suffix.result}"
   role   = aws_iam_role.provision_state_machine.id
   policy = data.aws_iam_policy_document.policy_for_manage_provisioned_product.json
 }

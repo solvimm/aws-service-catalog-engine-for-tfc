@@ -41,3 +41,9 @@ variable "send_apply_lambda_role_arn" {
   type        = string
   description = "ARN of the IAM Role that the Send Apply Lambda Function uses to trigger applies in Terraform Cloud"
 }
+
+variable "create_OIDC" {
+  type        = string
+  default     = "0"
+  description = "Validate if it`s necessary create the OIDC, 0 for no and 1 for yes."
+}

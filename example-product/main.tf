@@ -103,7 +103,7 @@ data "aws_iam_openid_connect_provider" "tfc_provider" {
 }
 
 resource "aws_iam_role" "example_product_launch_role" {
-  name = "${local.class_case_product_name}LaunchRole"
+  name = "${local.class_case_product_name}${random_string.random_suffix.result}LaunchRole"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -158,7 +158,7 @@ resource "time_sleep" "wait_for_launch_constraint_role_to_be_assumable" {
 }
 
 resource "aws_iam_role_policy" "example_product_launch_constraint_policy" {
-  name   = "example_product_launch_constraint_policy"
+  name   = "example_product_launch_constraint${random_string.random_suffix.result}_policy"
   role   = aws_iam_role.example_product_launch_role.id
   policy = data.aws_iam_policy_document.example_product_launch_constraint_policy.json
 }

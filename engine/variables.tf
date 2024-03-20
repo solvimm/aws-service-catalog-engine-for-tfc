@@ -47,3 +47,9 @@ variable "terraform_version" {
   default     = "1.5.4"
   description = "Version of Terraform Core to use in Terraform Cloud for all Service Catalog products"
 }
+
+variable "create_OIDC" {
+  type        = string
+  default     = "0"
+  description = "Validate if it`s necessary create the OIDC, 0 for no and 1 for yes."
+}

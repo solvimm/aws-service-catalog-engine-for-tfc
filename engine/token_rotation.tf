@@ -1,5 +1,10 @@
 # Copyright (c) HashiCorp, Inc.
 # SPDX-License-Identifier: MPL-2.0
+resource "random_string" "random_suffix" {
+  length  = 5
+  special = false
+  upper   = true
+}
 
 data "aws_iam_policy_document" "rotate_token_handler" {
   statement {
@@ -15,12 +20,12 @@ data "aws_iam_policy_document" "rotate_token_handler" {
 }
 
 resource "aws_iam_role" "rotate_token_handler_lambda_execution" {
-  name               = "ServiceCatalogTerraformCloudRotateTokenHandlerRole"
+  name               = "ServiceCatalogTerraformCloudRotateTokenHandlerRole${random_string.random_suffix.result}"
   assume_role_policy = data.aws_iam_policy_document.rotate_token_handler.json
 }
 
 resource "aws_iam_role_policy" "rotate_token_handler_lambda_execution_role_policy" {
-  name   = "ServiceCatalogTerraformCloudRotateTokenHandlerPolicy"
+  name   = "ServiceCatalogTerraformCloudRotateTokenHandlerPolicy${random_string.random_suffix.result}"
   role   = aws_iam_role.rotate_token_handler_lambda_execution.id
   policy = data.aws_iam_policy_document.policy_for_rotate_team_token_handler.json
 }
@@ -148,12 +153,12 @@ data "aws_iam_policy_document" "rotate_team_token" {
 }
 
 resource "aws_iam_role" "rotate_token_state_machine" {
-  name               = "ServiceCatalogTerraformCloudTokenRotationStateMachineRole"
+  name               = "ServiceCatalogTerraformCloudTokenRotationStateMachineRole${random_string.random_suffix.result}"
   assume_role_policy = data.aws_iam_policy_document.rotate_team_token.json
 }
 
 resource "aws_iam_role_policy" "rotate_team_token_state_machine_role_policy" {
-  name   = "ServiceCatalogTerraformCloudTokenRotationStateMachineRolePolicy"
+  name   = "ServiceCatalogTerraformCloudTokenRotationStateMachineRolePolic${random_string.random_suffix.result}"
   role   = aws_iam_role.rotate_token_state_machine.id
   policy = data.aws_iam_policy_document.policy_for_rotate_team_token_state_machine.json
 }
@@ -209,7 +214,7 @@ resource "aws_cloudwatch_event_target" "token_rotation" {
 }
 
 resource "aws_iam_role" "token_rotation_event_role" {
-  name               = "ServiceCatalogTerraformCloudTokenRotationEventRole"
+  name               = "ServiceCatalogTerraformCloudTokenRotationEventRole${random_string.random_suffix.result}"
   assume_role_policy = data.aws_iam_policy_document.token_rotation_event_role_policy_document.json
 }
 data "aws_iam_policy_document" "token_rotation_event_role_policy_document" {
@@ -228,7 +233,7 @@ data "aws_iam_policy_document" "token_rotation_event_role_policy_document" {
 }
 
 resource "aws_iam_role_policy" "token_rotation_state_machine_event_role_policy" {
-  name = "ServiceCatalogTerraformCloudTokenRotationEventPolicy"
+  name = "ServiceCatalogTerraformCloudTokenRotationEventPolicy${random_string.random_suffix.result}"
   role = aws_iam_role.token_rotation_event_role.id
 
   policy = <<EOF
