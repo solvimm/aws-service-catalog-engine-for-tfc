@@ -43,6 +43,7 @@ module "terraform_cloud_reference_engine" {
   enable_xray_tracing              = var.enable_xray_tracing
   token_rotation_interval_in_days  = var.token_rotation_interval_in_days
   terraform_version                = var.terraform_version
+  create_OIDC                      = var.create_OIDC
 }
 
 # Creates an AWS Service Catalog Portfolio to house the example product

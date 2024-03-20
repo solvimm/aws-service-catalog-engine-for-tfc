@@ -43,7 +43,7 @@ variable "send_apply_lambda_role_arn" {
 }
 
 variable "create_OIDC" {
-  type        = string
-  default     = "0"
+  type        = number
+  default     = 0
   description = "Validate if it`s necessary create the OIDC, 0 for no and 1 for yes."
 }
