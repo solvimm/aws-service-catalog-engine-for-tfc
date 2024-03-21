@@ -8,7 +8,7 @@ resource "random_string" "random_suffix_02" {
 
 resource "aws_lambda_function" "parameter_parser" {
   filename      = data.archive_file.parameter_parser.output_path
-  function_name = "ServiceCatalogTerraformCloudParameterParser"
+  function_name = "ServiceCatalogParameterParser"
   role          = aws_iam_role.parameter_parser.arn
   handler       = "bootstrap"
 
@@ -32,12 +32,12 @@ data "aws_iam_policy_document" "parameter_parser_assume_policy" {
 }
 
 resource "aws_iam_role" "parameter_parser" {
-  name               = "ServiceCatalogTerraformCloudParameterParser${random_string.random_suffix_02.result}"
+  name               = "ServiceCatalogParameterParser${random_string.random_suffix_02.result}"
   assume_role_policy = data.aws_iam_policy_document.parameter_parser_assume_policy.json
 }
 
 resource "aws_iam_role_policy" "parameter_parser" {
-  name   = "ServiceCatalogTerraformCloudParameterParserRolePolicy${random_string.random_suffix_02.result}"
+  name   = "ServiceCatalogParameterParserRolePolicy${random_string.random_suffix_02.result}"
   role   = aws_iam_role.parameter_parser.id
   policy = data.aws_iam_policy_document.parameter_parser.json
 }

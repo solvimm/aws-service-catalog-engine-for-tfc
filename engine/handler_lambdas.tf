@@ -30,12 +30,12 @@ data "aws_iam_policy_document" "provision_handler" {
 }
 
 resource "aws_iam_role" "provisioning_handler_lambda_execution" {
-  name               = "ServiceCatalogTerraformCloudProvisionHandlerRole-${random_string.random_suffix_01.result}"
+  name               = "ServiceCatalogProvisionHandlerRole-${random_string.random_suffix_01.result}"
   assume_role_policy = data.aws_iam_policy_document.provision_handler.json
 }
 
 resource "aws_iam_role_policy" "provision_handler_lambda_execution_role_policy" {
-  name   = "ServiceCatalogTerraformCloudProvisionHandler${random_string.random_suffix_01.result}Policy"
+  name   = "ServiceCatalogProvisionHandler${random_string.random_suffix_01.result}Policy"
   role   = aws_iam_role.provisioning_handler_lambda_execution.id
   policy = data.aws_iam_policy_document.policy_for_provision_handler.json
 }
@@ -84,7 +84,7 @@ resource "aws_iam_role_policy_attachment" "provision_handler_lambda_execution" {
 }
 
 resource "aws_lambda_function" "provision_handler" {
-  function_name = "ServiceCatalogTerraformCloudProvisionHandlerLambda"
+  function_name = "ServiceCatalogProvisionHandlerLambda"
   role          = aws_iam_role.provisioning_handler_lambda_execution.arn
   handler       = "bootstrap"
 
@@ -126,12 +126,12 @@ data "aws_iam_policy_document" "terminate_handler" {
 }
 
 resource "aws_iam_role" "terminate_handler_lambda_execution" {
-  name               = "ServiceCatalogTerraformCloudTerminateHandlerRole${random_string.random_suffix_01.result}"
+  name               = "ServiceCatalogTerminateHandlerRole${random_string.random_suffix_01.result}"
   assume_role_policy = data.aws_iam_policy_document.terminate_handler.json
 }
 
 resource "aws_iam_role_policy" "terminate_handler_lambda_execution_role_policy" {
-  name   = "ServiceCatalogTerraformCloudTerminateHandler${random_string.random_suffix_01.result}Policy"
+  name   = "ServiceCatalogTerminateHandler${random_string.random_suffix_01.result}Policy"
   role   = aws_iam_role.terminate_handler_lambda_execution.id
   policy = data.aws_iam_policy_document.policy_for_terminate_handler.json
 }
@@ -174,7 +174,7 @@ data "aws_iam_policy_document" "policy_for_terminate_handler" {
 }
 
 resource "aws_lambda_function" "terminate_handler" {
-  function_name = "ServiceCatalogTerraformCloudTerminateHandlerLambda"
+  function_name = "ServiceCatalogTerminateHandlerLambda"
   role          = aws_iam_role.terminate_handler_lambda_execution.arn
   handler       = "bootstrap"
 
@@ -216,12 +216,12 @@ data "aws_iam_policy_document" "update_handler" {
 }
 
 resource "aws_iam_role" "update_handler_lambda_execution" {
-  name               = "ServiceCatalogTerraformCloudUpdateHandlerRole-${random_string.random_suffix_01.result}"
+  name               = "ServiceCatalogUpdateHandlerRole-${random_string.random_suffix_01.result}"
   assume_role_policy = data.aws_iam_policy_document.update_handler.json
 }
 
 resource "aws_iam_role_policy" "update_handler_lambda_execution_role_policy" {
-  name   = "ServiceCatalogTerraformCloudUpdateHandler${random_string.random_suffix_01.result}Policy"
+  name   = "ServiceCatalogUpdateHandler${random_string.random_suffix_01.result}Policy"
   role   = aws_iam_role.update_handler_lambda_execution.id
   policy = data.aws_iam_policy_document.policy_for_update_handler.json
 }
@@ -264,7 +264,7 @@ data "aws_iam_policy_document" "policy_for_update_handler" {
 }
 
 resource "aws_lambda_function" "update_handler" {
-  function_name = "ServiceCatalogTerraformCloudUpdateHandlerLambda"
+  function_name = "ServiceCatalogUpdateHandlerLambda"
   role          = aws_iam_role.update_handler_lambda_execution.arn
   handler       = "bootstrap"
 

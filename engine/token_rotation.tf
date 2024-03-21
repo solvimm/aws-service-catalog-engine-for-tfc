@@ -20,12 +20,12 @@ data "aws_iam_policy_document" "rotate_token_handler" {
 }
 
 resource "aws_iam_role" "rotate_token_handler_lambda_execution" {
-  name               = "ServiceCatalogTerraformCloudRotateTokenHandlerRole${random_string.random_suffix_07.result}"
+  name               = "ServiceCatalogRotateTokenHandlerRole${random_string.random_suffix_07.result}"
   assume_role_policy = data.aws_iam_policy_document.rotate_token_handler.json
 }
 
 resource "aws_iam_role_policy" "rotate_token_handler_lambda_execution_role_policy" {
-  name   = "ServiceCatalogTerraformCloudRotateTokenHandlerPolicy${random_string.random_suffix_07.result}"
+  name   = "ServiceCatalogRotateTokenHandlerPolicy${random_string.random_suffix_07.result}"
   role   = aws_iam_role.rotate_token_handler_lambda_execution.id
   policy = data.aws_iam_policy_document.policy_for_rotate_team_token_handler.json
 }
@@ -116,7 +116,7 @@ data "archive_file" "rotate_token_handler" {
 # Lambda for rotating team tokens
 resource "aws_lambda_function" "rotate_token_handler" {
   filename      = data.archive_file.rotate_token_handler.output_path
-  function_name = "ServiceCatalogTerraformCloudRotateTokenHandler"
+  function_name = "ServiceCatalogRotateTokenHandler"
   role          = aws_iam_role.rotate_token_handler_lambda_execution.arn
   handler       = "bootstrap"
 
@@ -153,12 +153,12 @@ data "aws_iam_policy_document" "rotate_team_token" {
 }
 
 resource "aws_iam_role" "rotate_token_state_machine" {
-  name               = "ServiceCatalogTerraformCloudTokenRotationStateMachineRole${random_string.random_suffix_07.result}"
+  name               = "ServiceCatalogTokenRotationStateMachineRole${random_string.random_suffix_07.result}"
   assume_role_policy = data.aws_iam_policy_document.rotate_team_token.json
 }
 
 resource "aws_iam_role_policy" "rotate_team_token_state_machine_role_policy" {
-  name   = "ServiceCatalogTerraformCloudTokenRotationStateMachineRolePolic${random_string.random_suffix_07.result}"
+  name   = "ServiceCatalogTokenRotationStateMachineRolePolic${random_string.random_suffix_07.result}"
   role   = aws_iam_role.rotate_token_state_machine.id
   policy = data.aws_iam_policy_document.policy_for_rotate_team_token_state_machine.json
 }
@@ -202,7 +202,7 @@ data "aws_iam_policy_document" "policy_for_rotate_team_token_state_machine" {
 
 # Resources for rotating the team token every 30 days
 resource "aws_cloudwatch_event_rule" "rotate_token_schedule" {
-  name                = "ServiceCatalogTerraformCloudRotateToken"
+  name                = "ServiceCatalogRotateToken"
   description         = "Schedule for Token Rotation"
   schedule_expression = "rate(${var.token_rotation_interval_in_days} days)"
 }
@@ -214,7 +214,7 @@ resource "aws_cloudwatch_event_target" "token_rotation" {
 }
 
 resource "aws_iam_role" "token_rotation_event_role" {
-  name               = "ServiceCatalogTerraformCloudTokenRotationEventRole${random_string.random_suffix_07.result}"
+  name               = "ServiceCatalogTokenRotationEventRole${random_string.random_suffix_07.result}"
   assume_role_policy = data.aws_iam_policy_document.token_rotation_event_role_policy_document.json
 }
 data "aws_iam_policy_document" "token_rotation_event_role_policy_document" {
@@ -233,7 +233,7 @@ data "aws_iam_policy_document" "token_rotation_event_role_policy_document" {
 }
 
 resource "aws_iam_role_policy" "token_rotation_state_machine_event_role_policy" {
-  name = "ServiceCatalogTerraformCloudTokenRotationEventPolicy${random_string.random_suffix_07.result}"
+  name = "ServiceCatalogTokenRotationEventPolicy${random_string.random_suffix_07.result}"
   role = aws_iam_role.token_rotation_event_role.id
 
   policy = <<EOF
@@ -255,11 +255,11 @@ EOF
 }
 
 resource "aws_cloudwatch_log_group" "rotate_token_state_machine" {
-  name = "ServiceCatalogTerraformCloudTokenRotationStateMachine"
+  name = "ServiceCatalogTokenRotationStateMachine"
 }
 
 resource "aws_sfn_state_machine" "rotate_token_state_machine" {
-  name     = "ServiceCatalogTerraformCloudTokenRotationStateMachine"
+  name     = "ServiceCatalogTokenRotationStateMachine"
   role_arn = aws_iam_role.rotate_token_state_machine.arn
   logging_configuration {
     level                  = "ALL"

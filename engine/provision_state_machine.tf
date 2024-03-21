@@ -20,12 +20,12 @@ data "aws_iam_policy_document" "manage_provisioned_product" {
 }
 
 resource "aws_iam_role" "provision_state_machine" {
-  name               = "ServiceCatalogTerraformCloudProvisionOperationStateMachineRole${random_string.random_suffix_03.result}"
+  name               = "ServiceCatalogProvisionOperationStateMachineRole${random_string.random_suffix_03.result}"
   assume_role_policy = data.aws_iam_policy_document.manage_provisioned_product.json
 }
 
 resource "aws_iam_role_policy" "manage_provisioned_product_role_policy" {
-  name   = "ServiceCatalogTerraformCloudProvisionOperationStateMachineRolePolicy${random_string.random_suffix_03.result}"
+  name   = "ServiceCatalogProvisionOperationStateMachineRolePolicy${random_string.random_suffix_03.result}"
   role   = aws_iam_role.provision_state_machine.id
   policy = data.aws_iam_policy_document.policy_for_manage_provisioned_product.json
 }
@@ -83,12 +83,12 @@ data "aws_iam_policy_document" "policy_for_manage_provisioned_product" {
 }
 
 resource "aws_cloudwatch_log_group" "provision_state_machine" {
-  name              = "ServiceCatalogTerraformCloudProvisionOperationStateMachine"
+  name              = "ServiceCatalogProvisionOperationStateMachine"
   retention_in_days = var.cloudwatch_log_retention_in_days
 }
 
 resource "aws_sfn_state_machine" "provision_state_machine" {
-  name     = "ServiceCatalogTerraformCloudProvisionOperationStateMachine"
+  name     = "ServiceCatalogProvisionOperationStateMachine"
   role_arn = aws_iam_role.provision_state_machine.arn
 
   logging_configuration {
