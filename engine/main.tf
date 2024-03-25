@@ -6,7 +6,7 @@ terraform {
     organization = "e-core-cloud"
 
     workspaces {
-      name = "ServiceCatalogMultiRegion"
+      name = var.workspaces
     }
   }
 
