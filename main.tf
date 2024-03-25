@@ -5,9 +5,6 @@ terraform {
   backend "remote" {
     organization = "e-core-cloud"
 
-    workspaces {
-      name = var.workspaces
-    }
   }
   required_providers {
     aws = {
