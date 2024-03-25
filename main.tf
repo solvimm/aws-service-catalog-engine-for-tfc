@@ -2,10 +2,6 @@
 # SPDX-License-Identifier: MPL-2.0
 
 terraform {
-  backend "remote" {
-    organization = "e-core-cloud"
-
-  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -40,7 +36,6 @@ provider "tfe" {
 # without the example product, you can use this module in your own terraform configuration/workspace.
 module "terraform_cloud_reference_engine" {
   source                           = "./engine"
-  workspaces                       = var.workspaces
   tfc_organization                 = var.tfc_organization
   tfc_team                         = var.tfc_team
   tfc_aws_audience                 = var.tfc_aws_audience
