@@ -2,8 +2,9 @@
 # SPDX-License-Identifier: MPL-2.0
 
 terraform {
-  cloud {
+  backend "remote" {
     organization = "e-core-cloud"
+
     workspaces {
       name = var.workspaces
     }
@@ -36,15 +37,6 @@ provider "tfe" {
   hostname = var.tfc_hostname
 }
 
-terraform {
-  backend "remote" {
-    organization = "e-core-cloud"
-
-    workspaces {
-      name = var.workspaces
-    }
-  }
-}
 
 
 # This module provisions the Terraform Cloud Reference Engine. If you would like to provision the Reference Engine
