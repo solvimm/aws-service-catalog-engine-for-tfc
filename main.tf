@@ -6,7 +6,7 @@ terraform {
     organization = "e-core-cloud"
 
     workspaces {
-      name = var.workspaces
+      name = "ServiceCatalogMultiRegion"
     }
   }
   required_providers {
@@ -42,8 +42,8 @@ provider "tfe" {
 # This module provisions the Terraform Cloud Reference Engine. If you would like to provision the Reference Engine
 # without the example product, you can use this module in your own terraform configuration/workspace.
 module "terraform_cloud_reference_engine" {
-  source                           = "./engine"
-  workspaces                       = var.workspaces
+  source = "./engine"
+
   tfc_organization                 = var.tfc_organization
   tfc_team                         = var.tfc_team
   tfc_aws_audience                 = var.tfc_aws_audience

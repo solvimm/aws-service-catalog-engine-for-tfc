@@ -1,9 +1,6 @@
 # Copyright (c) HashiCorp, Inc.
 # SPDX-License-Identifier: MPL-2.0
-variable "workspaces" {
-  type        = string
-  description = "Name of the workspaces to manage infrastructure with in TFC"
-}
+
 
 variable "tfc_organization" {
   type        = string
