@@ -2,6 +2,12 @@
 # SPDX-License-Identifier: MPL-2.0
 
 terraform {
+  cloud {
+    organization = "e-core-cloud"
+    workspaces {
+      name = var.workspaces
+    }
+  }
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -13,3 +19,14 @@ terraform {
     }
   }
 }
+
+terraform {
+  backend "remote" {
+    organization = "e-core-cloud"
+
+    workspaces {
+      name = var.workspaces
+    }
+  }
+}
+
