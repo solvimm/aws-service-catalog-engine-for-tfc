@@ -255,7 +255,7 @@ EOF
 }
 
 resource "aws_cloudwatch_log_group" "rotate_token_state_machine" {
-  name = "ServiceCatalogTokenRotationStateMachine"
+  name = "/aws/vendedlogs/states/ServiceCatalogTokenRotationStateMachine"
 }
 
 resource "aws_sfn_state_machine" "rotate_token_state_machine" {
