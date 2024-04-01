@@ -116,7 +116,7 @@ data "archive_file" "rotate_token_handler" {
 # Lambda for rotating team tokens
 resource "aws_lambda_function" "rotate_token_handler" {
   filename      = data.archive_file.rotate_token_handler.output_path
-  function_name = "ServiceCatalogRotateTokenHandler"
+  function_name = "ServiceCatalogTerraformCloudRotateTokenHandler"
   role          = aws_iam_role.rotate_token_handler_lambda_execution.arn
   handler       = "bootstrap"
 

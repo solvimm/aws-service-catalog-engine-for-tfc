@@ -87,7 +87,7 @@ resource "aws_cloudwatch_log_group" "update_state_machine" {
 }
 
 resource "aws_sfn_state_machine" "update_state_machine" {
-  name     = "ServiceCatalogUpdateOperationStateMachine"
+  name     = "ServiceCatalogTerraformCloudUpdateOperationStateMachine"
   role_arn = aws_iam_role.update_state_machine.arn
 
   logging_configuration {

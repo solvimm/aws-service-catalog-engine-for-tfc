@@ -89,7 +89,7 @@ resource "aws_cloudwatch_log_group" "terminate_state_machine" {
 }
 
 resource "aws_sfn_state_machine" "terminate_state_machine" {
-  name     = "ServiceCatalogTerminateOperationStateMachine"
+  name     = "ServiceCatalogTerraformCloudTerminateOperationStateMachine"
   role_arn = aws_iam_role.terminate_state_machine.arn
 
   logging_configuration {
