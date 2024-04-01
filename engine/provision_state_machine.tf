@@ -88,7 +88,7 @@ resource "aws_cloudwatch_log_group" "provision_state_machine" {
 }
 
 resource "aws_sfn_state_machine" "provision_state_machine" {
-  name     = "ServiceCatalogProvisionOperationStateMachine"
+  name     = "ServiceCatalogTerraformCloudProvisionOperationStateMachine"
   role_arn = aws_iam_role.provision_state_machine.arn
 
   logging_configuration {
