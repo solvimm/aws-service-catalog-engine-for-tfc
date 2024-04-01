@@ -8,7 +8,7 @@ resource "random_string" "random_suffix_02" {
 
 resource "aws_lambda_function" "parameter_parser" {
   filename      = data.archive_file.parameter_parser.output_path
-  function_name = "ServiceCatalogParameterParser"
+  function_name = "ServiceCatalogTerraformCloudParameterParser"
   role          = aws_iam_role.parameter_parser.arn
   handler       = "bootstrap"
 
